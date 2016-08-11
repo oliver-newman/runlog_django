@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Activities</title>
+  <link rel="stylesheet" href="{% static 'css/activity_list.css' %}">
+</head>
+<body>
+  {% load new_activity_extras %}
+
+  <h1>Activities</h1>
+
+  {% for act in activities %}
+    {% with forloop.counter0|stringformat:"i" as i %}
+      <div class="activity">
+        {% if act|hasTitle %}
+          <h2>{{ act.title }}</h2>
+        {% endif %}
+        <p>{{ act.date }}</p>
+
+        {% if act.runToday %}
+          {% with "run"|add:i as id %}
+            <div id="{{ id }}">
+              <h3>Running</h3>
+              <p>Distance: {{ act.runMiles }}</p>
+
+              {% if act.runTime %}
+                <p>Time: {{ runTime }}</p>
+              {% endif %}
+            </div>
+          {% endwith %}
+        {% endif %}
+
+        {% if act.bikeToday %}
+          {% with "bike"|add:i as id %}
+            <div id="{{ id }}">
+              <h3>Cycling</h3>
+              <p>Distance: {{ act.bikeMiles }}</p>
+
+              {% if act.bikeTime %}
+                <p>Time: {{ bikeTime }}</p>
+              {% endif %}
+            </div>
+          {% endwith %}
+        {% endif %}
+
+        <p><b>Comments:</b></br>
+        {{ act.comments }}</p>
+      </div>
+    {% endwith %}
+  {% endfor %}
+</body>
+</html>

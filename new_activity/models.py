@@ -5,11 +5,11 @@ from django.db import models
 class Activity(models.Model):
     user = models.ForeignKey('auth.User')
     date = models.DateField()
-    ranToday = models.BooleanField()
+    runToday = models.BooleanField()
     runMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     runTime = models.DurationField(blank=True, null=True)
     shoe = models.ForeignKey('new_activity.Shoe', blank=True, null=True)
-    bikedToday = models.BooleanField()
+    bikeToday = models.BooleanField()
     bikeMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     bikeTime = models.DurationField(blank=True, null=True)
     bike = models.ForeignKey('new_activity.Bike', blank=True, null=True)
@@ -21,8 +21,17 @@ class Activity(models.Model):
         verbose_name_plural = "activities"
 
     def __str__(self):
-        return "{date}: {title}".format(date=str(self.date), title=self.title)
+        activityString = str(self.date)
 
+        if self.hasTitle():
+            activityString += ": " + self.title
+
+        return activityString
+
+    # Return whether or not title field is empty
+    def hasTitle(self):
+        return not (self.title == "" or self.title.isspace())
+    
 
 class Shoe(models.Model):
     name = models.CharField(max_length=64)
@@ -35,6 +44,15 @@ class Shoe(models.Model):
     def __str__(self):
         return self.name
 
+    def addMileage(dist):
+        self.mileage += dist
+
+    def setAsDefault():
+        self.isDefault = True
+
+    def setAsNotDefault():
+        self.isDefault = False
+
 
 class Bike(models.Model):
     name = models.CharField(max_length=64)
@@ -46,3 +64,16 @@ class Bike(models.Model):
     
     def __str__(self):
         return self.name
+
+    def addMileage(dist):
+        self.mileage += dist
+
+    def setAsDefault():
+        self.isDefault = True
+
+    def setAsNotDefault():
+        self.isDefault = False
+
+
+
+

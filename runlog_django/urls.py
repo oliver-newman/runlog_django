@@ -20,6 +20,6 @@ from new_activity import views
 
 urlpatterns = [
     url(r'^login/', include('login.urls')),
-    url(r'^new_activity/', include('new_activity.urls')),
+    url(r'^activities/', include('new_activity.urls')),
     url(r'^admin/', admin.site.urls),
 ]
