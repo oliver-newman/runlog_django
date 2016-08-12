@@ -1,26 +1,23 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-{% load staticfiles %}
+{% block title %}Activities{% endblock %}
 
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>New Activities</title>
-  <link rel="stylesheet" href="{% static 'css/activity_list.css' %}">
-</head>
-<body>
-  {% load new_activity_extras %}
+{% block content %}
+  {% load activities_extras %}
 
   <h1>Activities</h1>
 
   {% for act in activities %}
-    {% with forloop.counter0|stringformat:"i" as i %}
-      <div class="activity">
-        {% if act|hasTitle %}
-          <h2>{{ act.title }}</h2>
-        {% endif %}
-        <p>{{ act.date }}</p>
+    {% with i=forloop.counter0|stringformat:"i" %}
 
+      <div class="activity">
+
+        <!--activity title-->
+        <a href="{% url 'activity_detail' pk=activity.pk %}">
+        <h2>{{ act.date }}{% if act|hasTitle %}: {{ act.title }}{% endif %}</h2>
+        </a>
+
+        <!--run info-->
         {% if act.runToday %}
           {% with "run"|add:i as id %}
             <div id="{{ id }}">
@@ -30,6 +27,14 @@
               {% if act.runTime %}
                 <p>Time: {{ runTime }}</p>
               {% endif %}
+
+              <p>Shoe:
+              {% if act.shoe %} 
+                {{ act.shoe.name}} 
+              {% else %}
+                {{ "<i>None</i>"|safe }}
+              {% endif %}
+              </p>
             </div>
           {% endwith %}
         {% endif %}
@@ -43,14 +48,33 @@
               {% if act.bikeTime %}
                 <p>Time: {{ bikeTime }}</p>
               {% endif %}
+
+              <p>Bike:
+              {% if act.bike %} 
+                {{ act.bike.name}} 
+              {% else %}
+                {{ "<i>None</i>"|safe }}
+              {% endif %}
+              </p>
             </div>
           {% endwith %}
         {% endif %}
 
-        <p><b>Comments:</b></br>
-        {{ act.comments }}</p>
+        <p><b>Comments:</b><p>
+        {% if act.comments %}
+          <div class="comments">
+            <p>{{ act.comments }}<p>
+          </div>
+        {% endif %}
+
+        <p>Sleep Hours: {{ act.sleepHours }}</p>
       </div>
+
     {% endwith %}
   {% endfor %}
-</body>
-</html>
+{% endblock %}
+
+
+
+
+

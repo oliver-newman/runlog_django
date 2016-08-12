@@ -6,7 +6,7 @@ USERNAME = "orn688"
 def index(request):
     context_dict = {}
 
-    return render(request, 'new_activity/new_activity.html', context_dict)
+    return render(request, 'activities/activities.html', context_dict)
 
 
 def activity_list(request):
@@ -14,6 +14,6 @@ def activity_list(request):
     activities = Activity.objects.order_by('date')
     context_dict = {'activities': activities}
 
-    return render(request, 'new_activity/activity_list.html', context_dict)
+    return render(request, 'activities/activity_list.html', context_dict)
     
 

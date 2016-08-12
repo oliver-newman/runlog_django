@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from uuid import uuid4
 
 class Activity(models.Model):
     user = models.ForeignKey('auth.User')
@@ -8,11 +9,11 @@ class Activity(models.Model):
     runToday = models.BooleanField()
     runMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     runTime = models.DurationField(blank=True, null=True)
-    shoe = models.ForeignKey('new_activity.Shoe', blank=True, null=True)
+    shoe = models.ForeignKey('activities.Shoe', blank=True, null=True)
     bikeToday = models.BooleanField()
     bikeMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     bikeTime = models.DurationField(blank=True, null=True)
-    bike = models.ForeignKey('new_activity.Bike', blank=True, null=True)
+    bike = models.ForeignKey('activities.Bike', blank=True, null=True)
     sleepHours = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     title = models.CharField(max_length=64, blank=True, null=True)
     comments = models.CharField(max_length=2048, blank=True, null=True)

@@ -1,4 +1,10 @@
 div.activity {
 	border: 1px solid gray;
 	padding: 10px;
+	margin: 5px;
 }
+
+div.comments {
+	border: 1px solid gray;
+}
+

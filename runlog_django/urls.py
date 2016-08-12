@@ -16,10 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from login import views
-from new_activity import views
+from activities import views
 
 urlpatterns = [
     url(r'^login/', include('login.urls')),
-    url(r'^activities/', include('new_activity.urls')),
+    url(r'^activities/', include('activities.urls')), 
     url(r'^admin/', admin.site.urls),
 ]

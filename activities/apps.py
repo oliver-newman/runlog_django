@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class NewActivityConfig(AppConfig):
-    name = 'new_activity'
+    name = 'activities'
