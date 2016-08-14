@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        {% load activities_extras %}
+	<div class="activity">
+                <a class="btn btn-default" href="{% url 'edit_activity' pk=act.pk %}"><span class="glyphicon-pencil"></span></a>
+
+		<!--activity title-->
+		<a href="{% url 'activity_detail' pk=act.pk %}">
+                  <h2>{{ act.date }}{% if act|hasTitle %}: {{ act.title }}{% endif %}</h2>
+		</a>
+
+		<!--run info-->
+		{% if act.runToday %}
+			{% with "run" as id %}
+				<div id="{{ id }}">
+					<h3>Running</h3>
+					<p>Distance: {{ act.runMiles }}</p>
+
+					{% if act.runTime %}
+						<p>Time: {{ runTime }}</p>
+					{% endif %}
+
+					<p>Shoe:
+					{% if act.shoe %} 
+						{{ act.shoe.name}} 
+					{% else %}
+						{{ "<i>None</i>"|safe }}
+					{% endif %}
+					</p>
+				</div>
+			{% endwith %}
+		{% endif %}
+
+		{% if act.bikeToday %}
+			{% with "bike" as id %}
+				<div id="{{ id }}">
+					<h3>Cycling</h3>
+					<p>Distance: {{ act.bikeMiles }}</p>
+
+					{% if act.bikeTime %}
+						<p>Time: {{ bikeTime }}</p>
+					{% endif %}
+
+					<p>Bike:
+					{% if act.bike %} 
+						{{ act.bike.name}} 
+					{% else %}
+						{{ "<i>None</i>"|safe }}
+					{% endif %}
+					</p>
+				</div>
+			{% endwith %}
+		{% endif %}
+
+		<p><b>Comments:</b><p>
+		{% if act.comments %}
+			<div class="comments">
+				<p>{{ act.comments }}<p>
+			</div>
+		{% endif %}
+
+		<p>Sleep Hours: {{ act.sleepHours }}</p>
+	</div>
+{% endblock %}
+

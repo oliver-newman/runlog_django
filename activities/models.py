@@ -14,9 +14,9 @@ class Activity(models.Model):
     bikeMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     bikeTime = models.DurationField(blank=True, null=True)
     bike = models.ForeignKey('activities.Bike', blank=True, null=True)
-    sleepHours = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     title = models.CharField(max_length=64, blank=True, null=True)
     comments = models.CharField(max_length=2048, blank=True, null=True)
+    sleepHours = models.DecimalField(max_digits=3, decimal_places=1, default=0)
 
     class Meta:
         verbose_name_plural = "activities"
