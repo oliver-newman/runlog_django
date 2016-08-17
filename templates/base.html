@@ -6,18 +6,22 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/activity_list.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/items.css' %}">
 
   <!--Bootstrap-->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 </head>
 <body>
-  <!--TODO: Add more to header (navbar, etc.)-->
-  <div class="page-header">
-    <a href="{% url 'new_activity' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Add Activity</a>
-    <h1><a href="/">Django Log</a></h1>
-  </div>
+  {% block nav %}
+  <ul id="nav">
+    <li>{% block nav-home %}<a href="{% url 'home' %}">Home</a>{% endblock %}</li>
+    <li>{% block nav-activities %}<a href="{% url 'activities' %}">Activities</a>{% endblock %}</li>
+    <li>{% block nav-shoes %}<a href="{% url 'shoes' %}">Shoes</a>{% endblock %}</li>
+    <li>{% block nav-bikes %}<a href="{% url 'bikes' %}">Bikes</a>{% endblock %}</li>
+  </ul>
+  {% endblock %}
 
   <div class="content container">
     <div class="row">

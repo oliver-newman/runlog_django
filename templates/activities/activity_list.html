@@ -1,20 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'activities/activity_base.html' %}
 
 {% block title %}Activities{% endblock %}
 
 {% block content %}
-  {% load activities_extras %}
-
   <h1>Activities</h1>
 
   {% for act in activities %}
     {% with i=forloop.counter0|stringformat:"i" %}
 
-      <div class="activity">
+      <div class="item">
 
         <!--activity title-->
         <a href="{% url 'activity_detail' pk=act.pk %}">
-          <h2>{{ act.date }}{% if act|hasTitle %}: {{ act.title }}{% endif %}</h2>
+          <h2>{{ act.date }}{% if act.title %}: {{ act.title }}{% endif %}</h2>
         </a>
 
         <!--run info-->

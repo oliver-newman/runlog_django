@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from login import views
 from activities import views
 
 urlpatterns = [
-    url(r'^login/', include('login.urls')),
     url(r'^activities/', include('activities.urls')), 
     url(r'^admin/', admin.site.urls),
 ]

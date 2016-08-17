@@ -1,13 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'activities/activity_base.html' %}
+
+{% block title %}Activity Detail{% endblock %}
 
 {% block content %}
-        {% load activities_extras %}
-	<div class="activity">
-                <a class="btn btn-default" href="{% url 'edit_activity' pk=act.pk %}"><span class="glyphicon-pencil"></span></a>
+	<div class="item">
+                <a class="btn btn-default" href="{% url 'activity_edit' pk=act.pk %}"><span class="glyphicon-pencil"></span></a>
 
 		<!--activity title-->
 		<a href="{% url 'activity_detail' pk=act.pk %}">
-                  <h2>{{ act.date }}{% if act|hasTitle %}: {{ act.title }}{% endif %}</h2>
+                  <h2>{{ act.date }}{% if act.title %}: {{ act.title }}{% endif %}</h2>
 		</a>
 
 		<!--run info-->

@@ -1,0 +1,43 @@
+{% extends 'activities/shoe_base.html' %}
+
+{% block title %}Shoes{% endblock %}
+
+{% block content %}
+  <h1>Shoes</h1>
+
+  {% for shoe in shoes %}
+    {% with i=forloop.counter0|stringformat:"i" %}
+
+      <div class="item">
+
+        <a href="{% url 'shoe_detail' pk=shoe.pk %}">
+          <h2>{{ shoe.name }}</h2>
+        </a>
+
+        {% with "shoe"|add:i as id %}
+          <div id="{{ id }}">
+            {% if shoe.isDefault %}
+              <p><b>Default</b><p>
+            {% endif %}
+            <p>First Used: {{ shoe.firstUseDate }}</p>
+            <p>Mileage: {{ shoe.mileage }}</p>
+            
+            <p><b>Notes:</b><p>
+            {% if shoe.notes %}
+              <div class="comments">
+                <p>{{ shoe.notes }}<p>
+              </div>
+            {% endif %}
+          </div>
+
+        {% endwith %}
+
+      </div>
+    {% endwith %}
+  {% endfor %}
+{% endblock %}
+
+
+
+
+

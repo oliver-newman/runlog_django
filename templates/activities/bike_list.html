@@ -1,0 +1,43 @@
+{% extends 'activities/bike_base.html' %}
+
+{% block title %}Bikes{% endblock %}
+
+{% block content %}
+  <h1>Bikes</h1>
+
+  {% for bike in bikes %}
+    {% with i=forloop.counter0|stringformat:"i" %}
+
+      <div class="item">
+
+        <a href="{% url 'bike_detail' pk=bike.pk %}">
+          <h2>{{ bike.name }}</h2>
+        </a>
+
+        {% with "bike"|add:i as id %}
+          <div id="{{ id }}">
+            {% if bike.isDefault %}
+              <p><b>Default</b><p>
+            {% endif %}
+            <p>First Used: {{ bike.firstUseDate }}</p>
+            <p>Mileage: {{ bike.mileage }}</p>
+            
+            <p><b>Notes:</b><p>
+            {% if bike.notes %}
+              <div class="comments">
+                <p>{{ bike.notes }}<p>
+              </div>
+            {% endif %}
+          </div>
+
+        {% endwith %}
+
+      </div>
+    {% endwith %}
+  {% endfor %}
+{% endblock %}
+
+
+
+
+

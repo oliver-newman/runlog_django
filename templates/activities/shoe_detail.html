@@ -1,0 +1,30 @@
+{% extends 'activities/shoe_base.html' %}
+
+{% block title %}Shoe Detail{% endblock %}
+
+{% block content %}
+  <div class="item">
+    <a class="btn btn-default" href="{% url 'shoe_edit' pk=shoe.pk %}"><span class="glyphicon-pencil"></span></a>
+
+    <a href="{% url 'shoe_detail' pk=shoe.pk %}">
+      <h2>{{ shoe.name }}</h2>
+    </a>
+
+    <div id="shoe">
+      {% if shoe.isDefault %}
+        <p><b>Default</b><p>
+      {% endif %}
+      <p>First Used: {{ shoe.firstUseDate }}</p>
+      <p>Mileage: {{ shoe.mileage }}</p>
+      
+      <p><b>Notes:</b><p>
+      {% if shoe.notes %}
+        <div class="comments">
+          <p>{{ shoe.notes }}<p>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+{% endblock %}
+
