@@ -1,5 +1,6 @@
 body, html {
 	height: 100%;
+	width: 100%;
 	padding-top: 20px;
 }
 
@@ -16,7 +17,6 @@ a {
 	overflow: hidden;
 	background-color: black;
 	color: white;
-	/*border-bottom: 2px solid grey;*/
 	list-style-type: none;
 }
 
@@ -28,14 +28,13 @@ a {
 
 #nav li#about {
 	float: right;
-	border-left: 1px solid black;
-	border-right: none;
 }
 
 #nav li a {
 	color: white;
   display: block;
 	padding: 10px;
+	margin-left: 5px;
 	padding-right: 15px;
 	padding-left: 15px;
 	text-decoration: none;
@@ -57,4 +56,21 @@ a {
 	color: white;
 }
 
+#con {
+	min-height: 100%;
+	position: relative;
+}
 
+.content {
+  padding-bottom: 20px;
+}
+
+.foot {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	margin: 0;
+	height: 20px;
+	text-align: right;
+  border-top: 1px solid gray;
+}
