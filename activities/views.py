@@ -8,7 +8,7 @@ from django.http import HttpResponse # TODO: just for testing - remove this
 RUN_FIELDS = ['runMiles', 'runTime', 'shoe']
 BIKE_FIELDS = ['bikeMiles', 'bikeTime', 'bike']
 
-def index(request):
+def home(request):
     # username = request.POST['username']
     # password = request.POST['password']
     # user = authenticate(username=username, password=password)
@@ -18,7 +18,7 @@ def index(request):
         # return redirect('activity_list')
 
     context_dict = {}
-    return render(request, 'activities/index.html', context_dict)
+    return render(request, 'activities/home.html', context_dict)
 
 
 #-------------------------------------------------------------------------------
@@ -214,6 +214,13 @@ def bike_edit(request, pk):
     return render(request, 'activities/bike_edit.html', context_dict)
 
 
+#-------------------------------------------------------------------------------
+# About page
+
+def about(request):
+    context_dict = {}
+
+    return render(request, "activities/about.html", context_dict)
 
 
 
