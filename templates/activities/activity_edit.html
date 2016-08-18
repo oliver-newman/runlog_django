@@ -1,11 +1,23 @@
-{% extends 'activities/activity_base.html' %}
+{% extends "activities/activity_base.html" %}
 
 {% block title %}Edit Activity{% endblock %}
 
 {% block content %}
-        <h1>Edit Activity</h1>
-        <form method="POST" class="activity-form">{% csrf_token %}
-		{{ form.as_p }}
-                <button type="submit" class="save btn bt-default">Save</button>
-        </form>
+    <h1>Edit Activity</h1>
+    <form method="POST" class="activity-form">{% csrf_token %}
+        {% for field in form %}
+
+          {% if field.name in runFields %}
+            <div class="runField">
+          {% elif field.name in bikeFields %}
+            <div class="bikeField">
+          {% else %}
+            <div class="otherField">
+          {% endif %}
+
+              <p><label for="{{ field.name }}">{{ field.label }}:</label>{{ field }}</p>
+            </div>
+        {% endfor %}
+        <button type="submit" class="save btn bt-default">Save</button>
+    </form>
 {% endblock %}

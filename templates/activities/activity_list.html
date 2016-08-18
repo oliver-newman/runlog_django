@@ -4,6 +4,7 @@
 
 {% block content %}
   <h1>Activities</h1>
+  <a href="{% url 'activity_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Add Activity</a>
 
   {% for act in activities %}
     {% with i=forloop.counter0|stringformat:"i" %}
