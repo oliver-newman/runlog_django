@@ -4,7 +4,7 @@
 
 {% block content %}
   <h1>Bikes</h1>
-  <a href="{% url 'bike_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Add Bike</a>
+  <a href="{% url 'bike_new' %}" class="top-menu">Add Bike</a>
 
   {% for bike in bikes %}
     {% with i=forloop.counter0|stringformat:"i" %}
