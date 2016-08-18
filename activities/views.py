@@ -5,6 +5,8 @@ from .forms import ActivityForm, ShoeForm, BikeForm
 
 from django.http import HttpResponse # TODO: just for testing - remove this
 
+RUN_FIELDS = ['runMiles', 'runTime', 'shoe']
+BIKE_FIELDS = ['bikeMiles', 'bikeTime', 'bike']
 
 def index(request):
     # username = request.POST['username']
@@ -60,6 +62,8 @@ def activity_new(request):
 
     context_dict = {
         'form': form,
+        'runFields': RUN_FIELDS,
+        'bikeFields': BIKE_FIELDS
     }
 
     return render(request, 'activities/activity_edit.html', context_dict)
@@ -79,6 +83,8 @@ def activity_edit(request, pk):
 
     context_dict = {
         'form': form,
+        'runFields': RUN_FIELDS,
+        'bikeFields': BIKE_FIELDS
     }
 
     return render(request, 'activities/activity_edit.html', context_dict)
