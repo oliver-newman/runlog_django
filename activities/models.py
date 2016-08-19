@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils.deconstruct import deconstructible
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from uuid import uuid4
@@ -10,6 +11,31 @@ MAX_RUN_DIST = 200
 MAX_BIKE_DIST = 1000
 
 
+"""
+Custom user class with additional fields, inheriting from built-in user class
+"""
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+
+    runMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    bikeMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.user.username
+
+    def __unicode__(self):
+        return self.user.username
+
+    def addRunMileage(self, dist):
+        self.runMiles += dist
+
+    def addBikeMileage(self, dist):
+        self.bikeMiles += dist
+
+
+#-------------------------------------------------------------------------------
+
+@deconstructible
 class Shoe(models.Model):
     user = models.ForeignKey('auth.User')
     name = models.CharField(max_length=64)
@@ -19,6 +45,9 @@ class Shoe(models.Model):
     isDefault = models.BooleanField(default=True)
 
     def __str__(self):
+        return self.name
+
+    def __unicode__(self):
         return self.name
 
     def addMileage(self, dist):
@@ -39,6 +68,9 @@ class Shoe(models.Model):
         super(Shoe, self).save(*args, **kwargs)
 
 
+#-------------------------------------------------------------------------------
+
+@deconstructible
 class Bike(models.Model):
     user = models.ForeignKey('auth.User')
     name = models.CharField(max_length=64)
@@ -48,6 +80,9 @@ class Bike(models.Model):
     isDefault = models.BooleanField(default=True)
     
     def __str__(self):
+        return self.name
+
+    def __unicode__(self):
         return self.name
 
     def addMileage(self, dist):
@@ -65,6 +100,7 @@ class Bike(models.Model):
 
         super(Bike, self).save(*args, **kwargs)
 
+#-------------------------------------------------------------------------------
 
 # Helper functions for Activity class
 """
@@ -79,6 +115,7 @@ def defaultBike():
     return Bike.objects.get(isDefault=True)
 
 
+@deconstructible
 class Activity(models.Model):
     user = models.ForeignKey('auth.User')
     date = models.DateField()
@@ -119,11 +156,21 @@ class Activity(models.Model):
 
         return activityString
 
+    def __unicode__(self):
+        activityString = str(self.date)
+
+        if self.title:
+            activityString += ": " + self.title
+
+        return activityString
+
     # Override default save method, so that saving activity adjusts shoe miles
     def save(self, *args, **kwargs):
+        # TODO: adjust user run and bike mileage
         if self.shoe:
             self.shoe.addMileage(self.runMiles - self.old_runMiles)
             self.shoe.save()
+
         if self.bike:
             self.bike.addMileage(self.bikeMiles - self.old_bikeMiles)
             self.bike.save()
