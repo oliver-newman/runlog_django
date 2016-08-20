@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login
 from .models import Activity, Shoe, Bike
-from .forms import ActivityForm, ShoeForm, BikeForm
+from .forms import ActivityForm, ShoeForm, BikeForm, UserForm, UserProfileForm
 
 from django.http import HttpResponse # TODO: just for testing - remove this
 
@@ -19,6 +19,43 @@ def home(request):
 
     context_dict = {}
     return render(request, 'activities/home.html', context_dict)
+
+
+#-------------------------------------------------------------------------------
+# Activity views
+
+def register(request):
+    register = False
+
+    if request.method == 'POST':
+        userForm = UserForm(data=request.POST)
+        profileForm = UserProfileForm(data=request.POST)
+
+        if userForm.is_valid() and profileForm.is_valid():
+            user = userForm.save()
+
+            user.set_password(user.password)
+            user.save()
+
+            profile = profileForm.save(commit=False)
+            profile.user = user
+            profile.save()
+
+            registered = True
+
+        else:
+            print userForm.errors, profileForm.errors
+
+    else:
+        userForm = UserForm()
+        profileForm = UserProfileForm()
+
+    context_dict = {
+        'userForm': userForm,
+        'profileForm': profileForm
+    }
+
+    return render(request, 'activities/register.html', context_dict)
 
 
 #-------------------------------------------------------------------------------
@@ -47,7 +84,7 @@ def activity_detail(request, pk):
 
 
 def activity_new(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ActivityForm(request.POST)
 
         if form.is_valid():
@@ -72,10 +109,14 @@ def activity_new(request):
 def activity_edit(request, pk):
     activity = get_object_or_404(Activity, pk=pk)
 
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ActivityForm(request.POST, instance=activity)
 
-        if form.is_valid():
+        if request.POST.get('delete'):
+            activity.delete()
+            return redirect('activity_list')
+
+        elif form.is_valid():
             activity = form.save()
             return redirect('activity_detail', pk=activity.pk)
     else:
@@ -113,7 +154,7 @@ def shoe_detail(request, pk):
 
 
 def shoe_new(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ShoeForm(request.POST)
 
         if form.is_valid():
@@ -136,7 +177,7 @@ def shoe_new(request):
 def shoe_edit(request, pk):
     shoe = get_object_or_404(Shoe, pk=pk)
 
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ShoeForm(request.POST, instance=shoe)
 
         if form.is_valid():
@@ -175,7 +216,7 @@ def bike_detail(request, pk):
 
 
 def bike_new(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = BikeForm(request.POST)
 
         if form.is_valid():
@@ -198,7 +239,7 @@ def bike_new(request):
 def bike_edit(request, pk):
     bike = get_object_or_404(Bike, pk=pk)
 
-    if request.method == "POST":
+    if request.method == 'POST':
         form = BikeForm(request.POST, instance=bike)
 
         if form.is_valid():

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Register User{% endblock %}
+
+{% block content %}
+    <h1>New User</h1>
+
+    {% if registered %}
+        <p>Thank you for registering!</p>
+    {% else %}
+        <p>Register here!</p>
+
+        <form method="POST" class="user-form">
+
+            {% csrf_token %}
+
+            {{ userForm.as_p }}
+            {{ profileForm.as_p }}
+
+            <button type="submit" class="save btn btn-default">Submit</button>
+        </form>
+    {% endif %}
+{% endblock %}
+

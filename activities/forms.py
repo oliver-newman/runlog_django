@@ -1,5 +1,6 @@
 from django import forms
-from .models import Activity, Shoe, Bike
+from .models import UserProfile, Shoe, Bike, Activity
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from datetime import date
 
@@ -69,3 +70,22 @@ class BikeForm(forms.ModelForm):
             'notes': forms.Textarea(attrs={'cols': 80, 'rows': 10}),
         }
         
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('isRunner', 'isCyclist')
+
+
+
+
+
+

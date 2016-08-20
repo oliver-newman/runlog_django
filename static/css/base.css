@@ -28,6 +28,7 @@ a {
 
 #nav li#about {
 	float: right;
+	margin-right: 5px;
 }
 
 #nav li a {

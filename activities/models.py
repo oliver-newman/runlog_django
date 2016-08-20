@@ -17,6 +17,9 @@ Custom user class with additional fields, inheriting from built-in user class
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
+    isRunner = models.BooleanField(default = True)
+    isCyclist = models.BooleanField(default = True)
+
     runMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     bikeMiles = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
