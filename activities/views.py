@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login
+from django.template import RequestContext
 from .models import Activity, Shoe, Bike
 from .forms import ActivityForm, ShoeForm, BikeForm, UserForm, UserProfileForm
 
@@ -22,9 +23,45 @@ def home(request):
 
 
 #-------------------------------------------------------------------------------
-# Activity views
+# Login/user views
+
+def user_login(request):
+    """
+    User login view
+    """
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+
+        # If user with matching credentials was found
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/activities/')
+            else:
+                # Inactive account
+                return HttpResonseRedirect('/activities/failed_login/')
+        else:
+            print "Invalid login details for username {0}".format(username)
+            # TODO: Say this in a reload of user_login view
+            return HttpResponse("Invalid login details entered.")
+    else:
+        context_dict = {}
+
+        return render(request, 'activities/login.html', context_dict)
+
+
+def failed_login(request):
+    # TODO: create a view and template for this
+    return HttpResponse("Your account is disabled.")
+
 
 def register(request):
+    """
+    User registration view
+    """
     register = False
 
     if request.method == 'POST':
@@ -70,10 +107,10 @@ def activity_list(request):
     return render(request, 'activities/activity_list.html', context_dict)
 
 
-"""
-Info about existing activity with primary key pk
-"""
 def activity_detail(request, pk):
+    """
+    Info about existing activity with primary key pk
+    """
     act = get_object_or_404(Activity, pk=pk)
 
     context_dict = {
